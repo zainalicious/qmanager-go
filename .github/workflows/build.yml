@@ -1,1 +1,30 @@
+name: Build Go for OpenWrt
 
+on:
+  push:
+    branches: [ "main", "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.22'
+
+    - name: Build Binary for OpenWrt ARMv7
+      run: |
+        # Target arsitektur armv7l sesuai router OpenWrt Anda
+        GOOS=linux GOARCH=arm GOARM=7 go build -trimpath -ldflags="-s -w" -o qmanager-openwrt main.go
+
+    - name: Upload Binary Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: openwrt-qmanager
+        path: qmanager-openwrt
+        
