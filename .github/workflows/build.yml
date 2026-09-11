@@ -2,7 +2,7 @@ name: Build Go for OpenWrt
 
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: [ "main", "master", "dev-go" ]
 
 jobs:
   build:
