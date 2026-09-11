@@ -19,12 +19,12 @@ jobs:
 
     - name: Build Binary for OpenWrt ARMv7
       run: |
-        # Target arsitektur armv7l sesuai router OpenWrt Anda
-        GOOS=linux GOARCH=arm GOARM=7 go build -trimpath -ldflags="-s -w" -o qmanager-openwrt main.go
+        # Masuk ke folder backend tempat go.mod berada, lalu build dari cmd/server/main.go
+        cd backend
+        GOOS=linux GOARCH=arm GOARM=7 go build -trimpath -ldflags="-s -w" -o ../qmanager-openwrt cmd/server/main.go
 
     - name: Upload Binary Artifact
       uses: actions/upload-artifact@v4
       with:
         name: openwrt-qmanager
         path: qmanager-openwrt
-        
